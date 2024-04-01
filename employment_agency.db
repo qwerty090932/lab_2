@@ -1,0 +1,105 @@
+DROP TABLE IF EXISTS company;
+CREATE TABLE company(
+    company_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    company_name VARCHAR(40),
+    type_activity VARCHAR(40),
+    number_repsesentative VARCHAR(15)
+);
+INSERT INTO company (company_name, type_activity, number_repsesentative) VALUES
+    ('ABC Shipping Co.','Логистика и доставка','+1-555-123-4567'),
+    ('XYZ Law Firm','Юридические услуги','+1-555-876-5432'),
+    ('Green Energy','Энергетические','+1-555-345-6789'),
+    ('Tech Innovations Inc.','Инновации в технологиях',''),
+    ('Fresh Food Delivery','Доставка свежих продуктов',''),
+    ('Golden Asset','Управление активами','+1-555-654-3210'),
+    ('Blue Sky Airlines','Воздушные перевозки','+1-555-789-0123'),
+    ('Bright Events Planning','Организация мероприятий','+1-555-432-1098'),
+    ('Sunflower Nursery','Цветочное производство','+1-555-210-9876');
+
+
+
+
+DROP TABLE IF EXISTS post;
+CREATE TABLE post(
+   post_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   post_name VARCHAR(40)
+);
+INSERT INTO post (post_name) VALUES
+    ('Дизайнер'),
+    ('Юрист'),
+    ('Администратор баз данных'),
+    ('Главный инженер'),
+    ('Финансовый аналитик'),
+    ('Продавец'),
+    ('Инженер'),
+    ('Директор'),
+    ('Менеджер по персоналу');
+
+
+
+
+DROP TABLE IF EXISTS vacancy;
+CREATE TABLE vacancy(
+    vacancy_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    company_id INTEGER,
+    post_id INTEGER,
+    education VARCHAR(40),
+    salary INTEGER,
+    FOREIGN KEY (company_id) REFERENCES company (company_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES post (post_id) ON DELETE CASCADE
+);
+INSERT INTO vacancy (company_id, post_id, education, salary) VALUES
+ (1,1,'ВО',100000),
+ (1,2,'ВО',50000),
+ (1,3,'ВО',150000),
+ (1,5,'СПО',200000),
+ (2,6,'ДПО',70000),
+ (3,4,'СПО',300000),
+ (3,5,'ВО',80000),
+ (4,3,'СПО',95000),
+ (5,7,'СПО',35000);
+
+
+
+
+DROP TABLE IF EXISTS candidate;
+CREATE TABLE candidate(
+    candidate_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    candidate_name VARCHAR(40),
+    birthday DATE,
+    post_id INTEGER,
+    FOREIGN KEY (post_id) REFERENCES company (post_id) ON DELETE CASCADE
+);
+INSERT INTO candidate (candidate_name, birthday, post_id) VALUES
+    ('Анна Иванова','1995-15-03',1),
+    ('Петр Сидоров','1990-22-06',2),
+    ('Александр Смирнов','1998-05-04',3),
+    ('Елена Петрова','1992-02-01',4),
+    ('Мария Кузнецова','2000-26-06',5),
+    ('Никита Зайцев','1985-16-11',6),
+    ('Мария Абрамова','1994-12-10',7);
+
+
+
+
+DROP TABLE IF EXISTS deal;
+CREATE TABLE deal(
+    deal_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    vacancy_id INTEGER,
+    candidate_id INTEGER,
+    deal_date DATE,
+    FOREIGN KEY (vacancy_id) REFERENCES vacancy (vacancy_id) ON DELETE CASCADE,
+    FOREIGN KEY (candidate_id) REFERENCES candidate (candidate_id) ON DELETE CASCADE
+);
+INSERT INTO deal (vacancy_id, candidate_id, deal_date) VALUES
+    (1,1,'2024-05-04'),
+    (2,2,'2024-10-01'),
+    (3,3,'2023-12-12'),
+    (4,4,'2023-11-11'),
+    (5,5,'2023-10-10');
+
+
+
+
+
+
